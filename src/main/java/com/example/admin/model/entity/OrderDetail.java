@@ -22,5 +22,6 @@ public class OrderDetail {
     @ManyToOne
     private User user; // user_id
 
-    private Long itemId;
+    @ManyToOne
+    private Item item;
 }
