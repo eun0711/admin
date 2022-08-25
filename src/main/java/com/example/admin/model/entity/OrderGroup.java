@@ -1,5 +1,6 @@
 package com.example.admin.model.entity;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,13 +9,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-@Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@Data
 @Entity
-public class Item {
+public class OrderGroup {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,19 +24,21 @@ public class Item {
 
     private String status;
 
-    private String name;
+    private String orderType;   // 주문의 형태 - 일괄 / 개별
 
-    private String title;
+    private String revAddress;
 
-    private String content;
+    private String revName;
 
-    private Integer price;
+    private String paymentType; // 카드 / 현금
 
-    private String brandName;
+    private BigDecimal totalPrice;
 
-    private LocalDateTime registeredAt;
+    private Integer totalQuantity;
 
-    private LocalDateTime unregisteredAt;
+    private LocalDateTime orderAt;
+
+    private LocalDateTime arrivalDate;
 
     private LocalDateTime createdAt;
 
@@ -44,6 +48,5 @@ public class Item {
 
     private String updatedBy;
 
-    private Long partnerId;
-
+    private Long userId;
 }
