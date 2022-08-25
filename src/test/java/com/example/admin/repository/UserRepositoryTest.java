@@ -43,6 +43,8 @@ public class UserRepositoryTest {
         user.setCreatedAt(createdAt);
         user.setCreatedBy(createdBy);
 
+        User u = User.builder().account(account).password(password).build();
+
         User newUser = userRepository.save(user);
         Assertions.assertNotNull(newUser);
     }
@@ -52,6 +54,26 @@ public class UserRepositoryTest {
     public void read(){
 
         User user = userRepository.findFirstByPhoneNumberOrderByIdDesc("010-1111-2221");
+
+        user.setAccount("").setEmail(""); // Accessors chain =true
+
+        User u = new User().setAccount("");
+
+        user.getOrderGroupList().stream().forEach(orderGroup -> {
+            System.out.println(orderGroup.getTotalPrice());
+
+            System.out.println("----------주문상세----------");
+
+            orderGroup.getOrderDetailList().stream().forEach(orderDetail -> {
+
+                System.out.println("파트너사 카테고리 : " + orderDetail.getItem().getPartner().getCategory().getTitle());
+                System.out.println("주문 상품 : " + orderDetail.getItem().getName());
+                System.out.println("고객센터 번호 : " + orderDetail.getItem().getPartner().getName());
+                System.out.println("주문 상태 : " + orderDetail.getStatus());
+                System.out.println("도착 예정 일자 : " + orderDetail.getArrivalDate());
+
+            });
+        });
         Assertions.assertNotNull(user);
     }
 
