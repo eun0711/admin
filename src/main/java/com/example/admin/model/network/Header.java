@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.awt.print.Pageable;
 import java.time.LocalDateTime;
 
 @Data
@@ -28,6 +29,9 @@ public class Header<T> {
 
     private T data;
 
+    // pagination
+    private Pagination pagination;
+
     // OK
     public static <T> Header<T> OK(){
         return (Header<T>)Header.builder()
@@ -45,6 +49,16 @@ public class Header<T> {
                 .resultCode("OK")
                 .description("OK")
                 .data(data)
+                .build();
+    }
+
+    public static <T> Header<T> OK(T data, Pagination pagination){
+        return (Header<T>)Header.builder()
+                .transactionTime(LocalDateTime.now())
+                .resultCode("OK")
+                .description("OK")
+                .data(data)
+                .pagination(pagination)
                 .build();
     }
 

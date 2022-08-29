@@ -38,7 +38,7 @@ public class ItemApiLogicService implements CrudInterface<ItemApiRequest, ItemAp
                 .build();
 
         Item newItem = itemRepository.save(item);
-        return response(newItem);
+        return Header.OK(response(newItem));
     }
 
     @Override
@@ -46,6 +46,7 @@ public class ItemApiLogicService implements CrudInterface<ItemApiRequest, ItemAp
 
         return itemRepository.findById(id)
                 .map(item -> response(item))
+                .map(Header::OK)
                 .orElseGet(()-> Header.ERROR("데이터 없음"));
     }
 
@@ -70,6 +71,7 @@ public class ItemApiLogicService implements CrudInterface<ItemApiRequest, ItemAp
                 })
                 .map(newEntityItem -> itemRepository.save(newEntityItem))
                 .map(item -> response(item))
+                .map(Header::OK)
                 .orElseGet(()->Header.ERROR("데이터 없음"));
     }
 
@@ -84,7 +86,7 @@ public class ItemApiLogicService implements CrudInterface<ItemApiRequest, ItemAp
                 .orElseGet(()->Header.ERROR("데이터 없음"));
     }
 
-    private Header<ItemApiResponse> response(Item item){
+    public ItemApiResponse response(Item item){
 
         ItemApiResponse body = ItemApiResponse.builder()
                 .id(item.getId())
@@ -99,6 +101,6 @@ public class ItemApiLogicService implements CrudInterface<ItemApiRequest, ItemAp
                 .partnerId(item.getPartner().getId())
                 .build();
 
-        return Header.OK(body);
+        return body;
     }
 }

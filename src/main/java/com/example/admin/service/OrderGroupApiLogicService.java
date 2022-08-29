@@ -40,13 +40,14 @@ public class OrderGroupApiLogicService implements CrudInterface<OrderGroupApiReq
 
         OrderGroup newOrderGroup = orderGroupRepository.save(orderGroup);
 
-        return response(newOrderGroup);
+        return Header.OK(response(newOrderGroup));
     }
 
     @Override
     public Header<OrderGroupApiResponse> read(Long id) {
         return orderGroupRepository.findById(id)
                 .map(this::response)
+                .map(Header::OK)
                 .orElseGet(()-> Header.ERROR("데이터 없음"));
     }
 
@@ -73,6 +74,7 @@ public class OrderGroupApiLogicService implements CrudInterface<OrderGroupApiReq
                 })
                 .map(changeOrderGroup -> orderGroupRepository.save(changeOrderGroup))
                 .map(this::response)
+                .map(Header::OK)
                 .orElseGet(()->Header.ERROR("데이터 없음"));
     }
 
@@ -87,7 +89,7 @@ public class OrderGroupApiLogicService implements CrudInterface<OrderGroupApiReq
                 .orElseGet(()->Header.ERROR("데이터 없음"));
     }
 
-    private Header<OrderGroupApiResponse> response(OrderGroup orderGroup){
+    public OrderGroupApiResponse response(OrderGroup orderGroup){
 
         OrderGroupApiResponse body = OrderGroupApiResponse.builder()
                 .id(orderGroup.getId())
@@ -103,6 +105,6 @@ public class OrderGroupApiLogicService implements CrudInterface<OrderGroupApiReq
                 .userId(orderGroup.getUser().getId())
                 .build();
 
-        return Header.OK(body);
+        return body;
     }
 }
