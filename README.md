@@ -1,6 +1,5 @@
 # AdminProject
 
-**#Tools**
 
 - IDE(통합개발환경): InteliJ(인텔리제이)
 - Java: JDK 11.0.13
